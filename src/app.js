@@ -15,7 +15,7 @@ app.use(cors())
 //routes connecting to routers
 app.use("/movies", moviesRouter);
 app.use("/theaters", theatersRouter)
-// app.use("/reviews", reviewsRouter)
+app.use("/reviews", reviewsRouter)
 
 //error handlers
 app.use(notFound);
