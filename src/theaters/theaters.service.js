@@ -1,7 +1,23 @@
-const mapProperties = require("../utils/map-properties")
+const reduceProperties = require("../utils/reduce-properties");
+const knex = require("../db/connection");
 
- const addMovies = mapProperties({
-       category_id: "category.category_id",
-       category_name: "category.category_name",
-       category_description: "category.category_description",
-     });
+const addMoviesObject = reduceProperties("theater_id", {
+  movie_id: ["movies", null, "movie_id"],
+  title: ["movies", null, "title"],
+  runtime_in_minutes: ["movies", null, "runtime_in_minutes"],
+  rating: ["movies", null, "rating"],
+  description: ["movies", null, "description"],
+  image_url: ["movies", null, "image_url"],
+});
+
+function list() {
+  return knex("theaters as t")
+    .join("movies_theaters as mt", "t.theater_id", "mt.theater_id")
+    .join("movies as m", "m.movie_id", "mt.movie_id")
+    .select("t.*", "m.*")
+    .then(addMoviesObject);
+}
+
+module.exports = {
+  list,
+};

@@ -22,6 +22,7 @@ const mapProperties = require("./map-properties");
  */
 function getRowMapConfiguration(configuration, previousRow) {
   return Object.entries(configuration).reduce((accumulator, [key, values]) => {
+    // console.log("line 25", accumulator)
     accumulator[key] = values.map((value, index, source) =>
       value === null
         ? lodash.get(previousRow, `${source[index - 1]}.length`, 0)
@@ -47,7 +48,7 @@ function reduceProperties(uniqueField, configuration) {
     const reducedData = data.reduce((accumulator, row) => {
       const key = row[uniqueField];
       const rowObject = accumulator[key] || {};
-
+      // console.log("key", key, "rowObject", rowObject)
       const rowMapConfiguration = getRowMapConfiguration(
         configuration,
         rowObject
