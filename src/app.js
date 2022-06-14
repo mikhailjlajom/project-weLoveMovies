@@ -9,8 +9,9 @@ const reviewsRouter = require("../src/reviews/reviews.router")
 const notFound = require("../src/errors/notFound");
 const errorHandler = require("../src/errors/errorHandler")
 
-app.use(express.json());
 app.use(cors())
+app.use(express.json());
+
 
 //routes connecting to routers
 app.use("/movies", moviesRouter);
