@@ -18,6 +18,14 @@ function list() {
     .then(addMoviesObject);
 }
 
+function moviesTheaters(movieId) {
+  return knex("movies_theaters as mt")
+    .join("theaters as t", "mt.theater_id", "t.theater_id")
+    .select("t.*", "mt.is_showing", "mt.movie_id")
+    .where({ "mt.movie_id": movieId })
+}
+
 module.exports = {
   list,
+  moviesTheaters,
 };

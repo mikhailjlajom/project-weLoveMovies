@@ -19,11 +19,13 @@ res.sendStatus(204)
 
 async function update(req, res) {
     const updatedReview = {
-      ...req.body.data,
+      ...req.body.data,      
       review_id: res.locals.review.review_id,
     };
+    console.log("line 25", updatedReview.review_id)
     const data = await service.update(updatedReview);
     // passed in variable data instead of updatedReview
+    console.log("this is", data)
     res.json({ data });
   }
 

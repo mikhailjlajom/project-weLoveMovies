@@ -31,5 +31,6 @@ next({ status: 404, message: `Movie with ${movieId} does not exist`})
 
 module.exports = {
     list: [asyncErrorBoundary(list)],
-    read: [asyncErrorBoundary(movieExists),asyncErrorBoundary(read)]
+    read: [asyncErrorBoundary(movieExists),asyncErrorBoundary(read)],
+    movieExists
 }
