@@ -27,8 +27,6 @@ function update(updatedReview) {
         .where({ review_id: updatedReview.review_id })
         .then(addCriticsObject)
         .then((reviewData) => {
-          console.log("line 33", reviewData);
-          console.log("line 34", reviewData[0].critics);
           const {
             content,
             created_at,
@@ -51,8 +49,35 @@ function update(updatedReview) {
     );
 }
 
+function list(movieId) {
+  return knex("reviews as r")
+    .join("critics as c", "r.critic_id", "c.critic_id")
+    .where({ "r.movie_id": movieId })
+    .select("r.*", "c.*")
+    .then(addCriticsObject)
+    .then((reviews) => {
+      return reviews.map((reviewData) => {
+        const { content, created_at, movie_id, review_id, score, updated_at } =
+          reviewData;
+        return {
+          content,
+          created_at,
+          movie_id,
+          review_id,
+          score,
+          updated_at,
+          critic_id: reviewData.critics[0].critic_id,
+          critic: reviewData.critics[0],
+          created_at: reviewData.critics[0].created_at,
+          updated_at: reviewData.critics[0].updated_at,
+        };
+      });
+    });
+}
+
 module.exports = {
   read,
   destroy,
   update,
+  list,
 };
